@@ -1,6 +1,7 @@
+//*Sergio_Martínez_Pérez_(1633728)_Joel_Tapia_Salvador_(1638962)_Pràctica_2_FI_ED*//
 #include <stdio.h>
 #include <stdlib.h>
-#define N 3
+#define N 512
 int Mat1 [N][N];
 int Mat2 [N][N];
 int Vect1 [N];
@@ -57,28 +58,73 @@ int PermutaF(int Matriu[N][N],int fila1, int fila2) {
 	} 
 }
 
+void mulMat (int Mat1[N][N], int Mat2[N][N], int tempM1M2[N][N]){
+    
+    for (int b = 0; b<N; b++){
+        for (int i = 0; i<N; i++){
+            int suma = 0;
+            for (int j = 0; j<N; j++){
+
+            suma += Mat1[i][j]*Mat2[j][b];
+            }
+            
+            tempM1M2[i][b] = suma;
+        }
+    }
+}
+
+void transMat(int tempM1M2[N][N],int tempTransM1M2[N][N]){
+    
+    for (int i = 0; i<N; i++){
+        for (int j = 0; j<N; j++){
+            tempTransM1M2[j][i]=tempM1M2[i][j];
+        }
+    }
+    
+}
+
+int sumDiagonal(int tempTransM1M2[N][N]){
+    int suma=0;
+    for (int i = 0; i<N; i++){
+        suma += tempTransM1M2[i][i];
+    }        
+    return suma;
+}
+
+
 int main() {
-	int fet;
 	initMat();
-	for (int j=0; j<N; j++) {
-		for (int i=0; i<N; i++) {
-			printf ("%d ",Mat1[j][i]);
-		}
-		printf ("\n");
+	int tempM1M2[N][N];
+	mulMat(Mat1, Mat2, tempM1M2);
+	for (int j = 10; j < 20; j++){
+		printf("%d ", tempM1M2[10][j]);
 	}
-	fet=PermutaF (Mat1, 0, 1);
-	if (fet) {
-		printf("True\n");
+	printf("\n\n");
+	int tempV1V2 [N];
+	Saxpy(Vect1, Vect2, 4, tempV1V2);
+	for (int i=100; i<120; i++) {
+		printf ("%d ", tempV1V2[i]);
 	}
-	else {
-		if (!fet) {
-			printf("False\n");
-		}
+	printf ("\n\n");
+	int tempTransM1M2[N][N];
+   	transMat(tempM1M2,tempTransM1M2);
+   	for (int i = 10; i < 20; i++){
+		printf("%d ", tempTransM1M2[i][10]);
+		printf("\n");
+  	}
+  	printf("\n");
+	int realitzat;
+	realitzat=PermutaF(Mat1, 5, 10);
+	printf ("%d\n", realitzat);
+	realitzat=PermutaF(Mat2, 100, 512);
+	printf ("%d\n", realitzat);
+	printf ("\n");
+	printf("%d\n\n",sumDiagonal(tempTransM1M2));
+	int tempC [N];
+	sumElement(tempM1M2,tempC);
+	for (int i=400; i<420; i++) {
+		printf ("%d ", tempC[i]);
 	}
-	for (int j=0; j<N; j++) {
-		for (int i=0; i<N; i++) {
-			printf ("%d ",Mat1[j][i]);
-		}
-		printf ("\n");
-	}
+	printf ("\n\n");
+	
 }
